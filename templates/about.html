@@ -1,0 +1,31 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block css%}
+<link rel="stylesheet" href="{%static 'about.css'%}">
+{%endblock%}
+
+{%block content%}
+<style>
+    .container {
+    width: 100vw; /* Adjust the right margin */
+    max-width: 100%;    /* Adjust the width if needed */
+}
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 d-flex justify-content-center align-items-center about-contain " style="height: 100vh;">
+            <h1>About</h1>
+        </div>
+        <div class="col-lg-8 pt-5 d-flex justify-content-center ">
+            <h3 style="color: rgb(207, 207, 207); font-weight: 100; padding: 30px;">
+                <span class="logo">Uzbexposure</span> is dedicated to showcasing the beauty of Uzbek heritage through captivating images, stories, and insights. Whether you're a local or a visitor, Uzbexposure offers a unique opportunity to discover and celebrate the vibrant traditions, landscapes, and people that make Uzbekistan truly special.
+
+                At Uzbexposure, we believe that culture is best experienced through the eyes of the people who live it. That's why we've created a space where anyone can contribute and share their own photos, bringing together a community of culture enthusiasts who are passionate about preserving and promoting the essence of Uzbekistan.
+                <br><br>
+                <span style="font-size: 2em;">Join us on a journey to explore the heart of Central Asia. </span>
+                <br><br>
+            </h3>
+        </div>
+    </div>
+</div>
+{%endblock%}

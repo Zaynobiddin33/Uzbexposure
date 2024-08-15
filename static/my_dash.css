@@ -1,0 +1,53 @@
+
+.box.show-delete .delete-btn {
+    display: block;
+}
+.delete-btn {
+    position: absolute;
+    width: 50%;
+    height: 50px;
+    /* border-radius: 50%; */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background-color: rgba(111, 22, 22, 0.49);
+    top: 10px;
+    /* left: 10px; */
+    cursor: pointer;
+    border: 0.5px solid rgba(90, 20, 20, 0.563);
+    color: white;
+}
+
+.box.show-update .update-btn{
+    display: block;
+}
+.text-main{
+    color: white;
+}
+.accept-btn {
+    position: absolute;
+    width: 50%;
+    height: 50px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background-color: rgba(8, 65, 39, 0.546);
+    top: 10px;
+    left: 50%;
+    cursor: pointer;
+    border: 0.5px solid rgba(90, 20, 20, 0.563);
+    color: white;
+}
+
+.upload-more{
+    background-color: black;
+    border: 1px solid white;
+    height: 40px;
+    width: 200px;
+    border-radius: 20px;
+    color: white;
+    transition: 0.5s;
+
+}
+.upload-more:hover{
+    background-color: white;
+    color: black;
+}

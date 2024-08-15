@@ -1,0 +1,42 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block css%}
+<link rel="stylesheet" href="{%static 'ranking.css'%}">
+{%endblock%}
+{%block content%}
+<!-- <h1>User Rank List</h1>
+<ul>
+    {% for user in ranked_users_with_rank %}
+        <li>{{ user.rank }}. {{ user.first_name }} - {{ user.image_count }} images</li>
+    {% endfor %}
+</ul> -->
+<div class="container">
+    <div class="row mt-5">
+        <div class="co-12 mt-5 mb-4 d-flex justify-content-center">
+            <h1 style="color: white; font-weight: 200;">Top Contributors: Ranking by Uploaded Images</h1>
+        </div>
+        <div class="col-lg-12 d-flex justify-content-center">
+            <table class="rank-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Username</th>
+                        <th class="d-none d-sm-block">Email</th>
+                        <th>Images Uploaded</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in ranked_users_with_rank %}
+                    <tr>
+                        <td>{{ user.rank }}</td>
+                        <td>{{ user.first_name }}</td>
+                        <td class="d-none d-sm-block">{{ user.email }}</td>
+                        <td>{{ user.image_count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{%endblock%}

@@ -1,0 +1,49 @@
+{%load static%}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Uzbexposure</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{%static 'base.css' %}">
+    <link rel="stylesheet" href="{%static 'style.css'%}">
+    {%block css%}
+
+    {%endblock%}
+  </head>
+  <body>
+    <div class="navbar col-12 hidden">
+        <div class="navbar-brand">
+            <a href="{%url 'main'%}"><h1>Uzbexposure</h1></a>
+        </div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <div class="navbar-links" id="navbar-links">
+            <a href="{%url 'contribute'%}" class="nav-link">Contribute </a>
+            <a href="{%url 'ranking'%}" class="nav-link">Ranking</a>
+            <a href="{%url 'about'%}" class="nav-link">About</a>
+            {%if not user.is_authenticated%}
+            <a href="{%url 'signup'%}" class="nav-link">Sign-up</a>
+            <a href="{%url 'login'%}" class="nav-link">Login</a>
+            {%else%}
+            <a href="{%url 'dashboard'%}" class="nav-link">{{user.first_name}}'s dashboard</a>
+            <a href="{%url 'logout'%}" class="nav-link">Log-out</a>
+            {%endif%}
+        </div>
+    </div>
+
+    {%block content%}
+    {%endblock%}
+    <script>
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navbarLinks = document.getElementById('navbar-links');
+  
+        mobileMenu.addEventListener('click', () => {
+          navbarLinks.classList.toggle('active');
+        });
+      </script>
+    </body>
+    </html>

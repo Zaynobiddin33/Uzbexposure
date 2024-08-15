@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Grey+Qo&display=swap');
+.main-text{
+    font-size: 7vw;
+    color: white;
+    font-weight: 200;
+}
+.header h1{
+    font-family: "Grey QO", cursive;
+}
+.text h2{
+    color: white;
+    font-weight: 200;
+    text-align: center;
+}
+.register button{
+    text-decoration: none;
+    background-color: transparent;
+    color: wheat;
+    border: 1px wheat solid;
+    border-radius: 40px;
+    width: 200px;
+    height: 50px;
+    font-size: 1.3em;
+    font-weight: 200;
+    transition: 0.5s;
+}
+.register button:hover{
+    background-color: wheat;
+    color: black;
+}
+.base{
+    height: 100vh;
+}

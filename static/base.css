@@ -1,0 +1,99 @@
+@keyframes slideDown {
+    from { top: -60px; visibility: visible; }
+    to { top: 0; visibility: visible; }
+  }
+  /* Navbar Container */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 60px;
+    position: fixed;
+    z-index: 1000; /* Ensure navbar stays on top */
+    background: rgba(115, 115, 115, 0.2); /* Semi-transparent background */
+    backdrop-filter: blur(20px); /* Adjust the blur level */
+    -webkit-backdrop-filter: blur(20px); /* For Safari support */
+    border: 1px #6f6f6f;
+    animation: slideDown 1s 1s forwards;
+    width: 100%;
+  }
+  
+  /* Navbar Brand */
+  .navbar-brand a {
+    color: white;
+    font-size: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: "Grey Qo", cursive;
+  }
+  
+  /* Navbar Links */
+  .navbar-links {
+    display: flex;
+  }
+  
+  .navbar-links .nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 14px 20px;
+    display: block;
+    text-align: center;
+    font-size: 16px;
+    opacity: 0.5;
+    
+  }
+  
+  .navbar-links .nav-link:hover {
+    opacity: 1;
+    transition: 0.5;
+  }
+  
+  /* Mobile Menu Toggle */
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+  }
+  
+  .menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 4px 0;
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .navbar-links {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.767); /* Semi-transparent background */
+      backdrop-filter: blur(20px); /* Adjust the blur level */
+      -webkit-backdrop-filter: blur(20px); /* For Safari support */
+      border: 1px #6f6f6f;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      color: white;
+    }
+  
+    .navbar-links.active {
+      display: flex;
+    }
+  
+    .navbar-links .nav-link {
+      text-align: left;
+      padding: 14px;
+      border-bottom: 1px solid #444;
+      
+    }
+  
+    .menu-toggle {
+      display: flex;
+    }
+  }
+  .navbar.hidden {
+    visibility: hidden; /* Hide the navbar initially */
+  }

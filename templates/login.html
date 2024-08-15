@@ -1,0 +1,66 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block css%}
+<link rel="stylesheet" href="{%static 'login.css'%}">
+{%endblock%}
+{%block content%}
+<div class="back" style="background-image: url({{random.url}});">
+
+</div>
+<form class="wrapper" method="post">
+    {%csrf_token%}
+    <div class="login_box">
+      <div class="login-header">
+        <span>Login</span>
+      </div>
+      <div>
+        {%if error != 'None'%}
+            <p class="error" style="color: red;">{{error}}</p>
+            <style>
+                .error{
+                    position: relative;
+                    display: flex;
+                    justify-content: center;
+                    animation: shake 0.3s forwards;
+                }
+                @keyframes shake {
+                    20%{
+                        top: 10px;
+                    }
+                    40%{
+                        top: -10px;
+                    }
+                    60%{
+                        top: 6px;
+                    }
+                    80%{
+                        top: -6px;
+                    }
+                    100%{
+                        top: 3px;
+                    }
+                }
+            </style>
+        {%endif%}
+      </div>
+      <div class="input_box">
+        <input type="text" id="email" name="email" class="input-field" required placeholder="Your email">
+        <label for="email" class="label">Your email</label>
+        <i class="bx bx-user icon"></i>
+      </div>
+      <div class="input_box">
+        <input type="password" id="password" name="password" class="input-field" required placeholder="Password">
+        <label for="password" class="label">Password</label>
+        <i class="bx bx-lock-alt icon"></i>
+      </div>
+
+      <div class="input_box">
+        <input type="submit" class="input-submit" value="Login">
+      </div>
+      <div class="register">
+        <span>Don't have an account yet?<a href="{%url 'signup'%}">Sign-up</a></span>
+      </div>
+    </div>
+</form>
+
+{%endblock%}

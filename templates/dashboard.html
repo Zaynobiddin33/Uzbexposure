@@ -1,0 +1,166 @@
+{%extends 'base.html'%}
+{%load static%}
+    {%block css%}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{%static 'my_dash.css'%}">
+    {%endblock%}
+    {%block content%}
+    <div class="row">
+        <div class="col-12 mt-5 mb-5 pt-5 d-flex justify-content-center text-main">
+            <h2>{{user.first_name}}'s dashboard</h2>
+        </div>
+        {%if images|length > 0%}
+            <div class="col-12 d-flex justify-content-center align-items-center">
+                <a href="{%url 'upload'%}">
+                    <button class="upload-more">
+                        Upload more <i class="bi bi-upload"></i>
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="col-12 mt-2 mb-3 pt-5 d-flex justify-content-center text-main p-4">
+            <h4>If some of your images don't seem here, that means they were not accepted by Admins</h4>
+        </div>
+        {%endif%}
+
+    </div>
+    <div class="container">
+        <div class="row infinite-container grid"  id="newsss"> <!-- data-masonry='{"percentPosition": true }'  -->
+            {%if images|length > 0%}
+           {%for i in images%}
+             <div class="col-12 col-xs-12 col-sm-6 col-lg-4 col-xl-4 mb-4 grid-item post">
+               <div class="card" style="background-color: transparent; filter: brightness(1);">
+                   <img src="{{i.url}}" alt="News Image">
+                   <div class="col-12 d-flex justify-content-between">
+                    <a href="{%url 'delete_image' i.id%}"><button class="delete-btn" style="opacity: 1;"><i class="bi bi-x-lg"></i></button></a>
+                    {%if user.is_superuser%}
+                    <a href="{%url 'accept_image' i.id%}"><button class="accept-btn"><i class="bi bi-check-lg"></i></button></a>
+                    {%endif%}
+                </div>
+                   {%if i.description != None%}
+                   <p style="background-color: transparent; color: white;">{{i.description}}</p>
+                   {%endif%}
+               </div>
+             </div>
+           {%endfor%}
+            {%else%}
+            <div class="row" style="height: 200px;">
+                <div class="col-12 ms-2 d-flex justify-content-center align-items-center">
+                    <h2 style="color: white; font-weight: 100; text-align: center;">You have no images that you uploaded, or all of them were not accepted by Admins</h2>
+                </div>
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <a href="{%url 'upload'%}">
+                        <button class="upload-more">
+                            Upload <i class="bi bi-upload"></i>
+                        </button>
+                    </a>
+                </div>
+            </div>
+            {%endif%}
+   
+           <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+           <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
+           <script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
+           <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+           <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+           <script>
+               var elem = document.querySelector('.grid');
+               var msnry = new Masonry( elem, {
+               // options
+               itemSelector: '.grid-item',
+               columnWidth: 200
+               });
+       
+               // element argument can be a selector string
+               //   for an individual element
+               var msnry = new Masonry( '.grid', {
+               // options
+               });
+           </script>
+   
+           {% if images.has_next %}
+           
+                  <div class="pagination">
+                       <a class="next" href="?page={{ images.next_page_number }}"></a>
+                  </div>
+                  
+           {% endif %}
+            </div>
+       </div>
+       {% if images.has_next %}
+           <div class="mainCss">
+               <div class="dotsCss">
+               <div class="dot"></div>
+               <div class="dot"></div>
+               <div class="dot"></div>
+               </div>
+           </div>
+       {%else%}
+           <div class="mainCss">
+               <div class="col-12 d-flex justify-content-center">
+                   <h6>end of the stream</h6>
+               </div>
+           </div>
+       {% endif %}
+       
+   
+   
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+   
+   
+       <script>
+           document.addEventListener("DOMContentLoaded", function() {
+           setTimeout(() => {
+               document.querySelector('.navbar').classList.remove('hidden');
+           }, 2000); // Show navbar when 'Uzbexposure' starts moving up
+       });
+   
+       </script>
+       <script>
+           document.addEventListener("DOMContentLoaded", function() {
+               const words = [" Heritage", " Culture", " History", " Art", " Architecture", 'Life', 'Traditions'];
+               const dynamicWord = document.getElementById('dynamic-word');
+               let index = 0;
+   
+               function changeWord() {
+                   dynamicWord.classList.remove('fade-in', 'fade-out');
+                   dynamicWord.classList.add('fade-out');
+                   
+                   setTimeout(() => {
+                       dynamicWord.textContent = words[index];
+                       dynamicWord.classList.remove('fade-out');
+                       dynamicWord.classList.add('fade-in');
+                   }, 1000); // Time for fade-out effect
+   
+                   index = (index + 1) % words.length;
+               }
+   
+               setInterval(changeWord, 2000); // Change every 2 seconds
+           });
+       </script>
+   
+   
+   
+   
+   
+   
+   
+   
+       <!-- infinite scroll -->
+   
+   
+   
+   <script>
+   var elem2 = document.querySelector('.grid');
+   var infScroll = new InfiniteScroll( '.grid', {
+       path: '.next',
+       append: '.grid-item',
+       outlayer: msnry,
+       history: false,
+       status: ".mainCss"
+       });
+   </script>  
+   
+   
+   {%endblock%}
+

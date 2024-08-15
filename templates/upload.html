@@ -1,0 +1,60 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block css%}
+<link rel="stylesheet" href="{%static 'dashboard.css'%}">
+{%endblock%}
+
+{%block content%}
+<div class="upload-container">
+    <h1>Upload Your Image</h1>
+    <form method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+        <div class="input-box">
+            <label for="image-upload" class="custom-file-upload">
+                Choose Image
+            </label>
+            <input type="file" id="image-upload" name="image" accept="image/*" required>
+        </div>
+        <div id="image-preview" class="image-preview">
+            <p>No image chosen</p>
+        </div>
+        <div class="input-box">
+            <label for="description" class="description-label">Description</label>
+            <textarea id="description" name="description" rows="4" placeholder="Describe the image (location, situation, etc.)..." required></textarea>
+        </div>
+        <button type="submit" class="upload-btn">Upload</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('image-upload').addEventListener('change', function(event) {
+    const previewContainer = document.getElementById('image-preview');
+    const previewImage = previewContainer.querySelector('img');
+    const previewText = previewContainer.querySelector('p');
+
+    const file = event.target.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+
+        previewText.style.display = 'none';
+
+        if (!previewImage) {
+            const imgElement = document.createElement('img');
+            previewContainer.appendChild(imgElement);
+        }
+
+        reader.addEventListener('load', function() {
+            previewContainer.querySelector('img').style.display = 'block';
+            previewContainer.querySelector('img').setAttribute('src', this.result);
+        });
+
+        reader.readAsDataURL(file);
+    } else {
+        previewText.style.display = null;
+        if (previewImage) previewImage.style.display = 'none';
+    }
+});
+</script>
+{%endblock%}

@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Grey+Qo&display=swap');
+html{
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    /* font-family: "Grey Qo", cursive; */
+    font-weight: 200;
+    /* font-style: normal; */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: black;
+  }
+  
+  /* Main Image Styling */
+  .main-image {
+    background-color: black;
+    filter: brightness(0);
+    animation: appearImage 4s forwards;
+  }
+  @keyframes appearImage {
+    0% {
+        filter: brightness(0);
+    }
+    25%{
+        filter: brightness(0);
+    }
+    100% {
+        position: relative;
+        filter: brightness(0.2);
+    }
+  }
+  .no-scroll {
+    animation: keepMain 10s forwards;
+  }
+
+  @keyframes keepMain {
+    from{
+      height: 100vh;
+      overflow: hidden;
+    }
+    to{
+      height: auto;
+      overflow: visible;
+    }
+  }
+  
+  .intro-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    text-align: center;
+    position: absolute;
+    z-index: 100;
+    width: 100vw;
+    margin-top: 60px;
+  }
+  
+  #uzbeksposure {
+    font-size: 10vw;
+    opacity: 0;
+    color: white;
+    font-family: "Grey QO", cursive;
+    animation: fadeIn 1s forwards, moveUp 2s 1s forwards; /* Fade in, then move up */
+    position: relative;
+  }
+  .wrap-main{
+    animation: freezing 10s forwards;
+  }
+  @keyframes freezing{
+    10%{
+      position: fixed;
+    }
+    90%{
+      position: fixed;
+    }
+    100%{
+      position: relative;
+    }
+  }
+  #explore {
+    /* display: flex; */
+    font-size: 70px;
+    opacity: 0;
+    animation: fadeInText 2s 2s forwards; /* Fade in after the move */
+    color: white;
+    font-weight: 200;
+    transition: 1s;
+  }
+  
+  @keyframes fadeIn {
+    10% { opacity: 0;
+    color: black; }
+    90% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @keyframes moveUp {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100px);
+        font-size: 5em; }
+  }
+  
+  @keyframes fadeInText {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  #dynamic-word {
+    font-weight: bold;
+    position: relative;
+    display: inline-block;
+}
+
+@keyframes slideDown {
+    from { top: -60px; visibility: visible; }
+    to { top: 0; visibility: visible; }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.fade-in {
+    animation: fadeIn 1s forwards;
+}
+
+.fade-out {
+    animation: fadeOut 1s forwards;
+}
+.text-contain{
+    padding: 50px;
+    text-align: center;
+    color: white;
+}
+.text-contain h2 span{
+    font-family: "Grey QO", cursive;
+    font-size: 1.5em;
+}
+.text-contain h2{
+    font-weight: 200;
+}
+
+
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  --s: 15px;
+  width: calc(var(--s)*2.33);
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: space-between;
+  animation: l29-0 1s infinite;
+}
+.loader::before,
+.loader::after {
+  content: "";
+  width: var(--s);
+  --_g: no-repeat radial-gradient(farthest-side,#535353 94%,#0000);
+  background:
+    var(--_g) top,
+    var(--_g) bottom;
+  background-size: 100% var(--s);
+  transform-origin: 50% calc(100% - var(--s)/2);
+  animation: inherit;
+  animation-name: l29-1;
+}
+.loader::after {
+  --_s:-1;
+}
+@keyframes l29-0 {
+    100% {transform:translateY(calc(var(--s) - 100%))}
+}
+@keyframes l29-1 {
+    100% {transform:rotate(calc(var(--_s,1)*-180deg))}
+}
+.card{
+  filter: brightness(0.5);
+  background-color: transparent;
+}
+
+.card img {
+  width: 100%;
+  /* height: 200px; */
+  object-fit: cover;
+}
+
+/* Container for maintaining layout stability */
+
+/* Image styles */
+.img-blur {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  filter: blur(10px); /* Initial blur effect */
+  transition: filter 0.3s ease; /* Smooth transition */
+}
+
+.show {
+  display: block; /* Show the element */
+}
+.no-scroll {
+  overflow: hidden; /* Prevent scrolling */
+}
