@@ -17,5 +17,7 @@ urlpatterns = [
     path('accept-image/<int:id>', views.accept_image, name='accept_image'),
     path('log-out', views.logout_user, name='logout'),
     path('about', views.about, name='about'),
-    path('ranking', views.ranking, name='ranking')
+    path('ranking', views.ranking, name='ranking'),
+    path('to-insta', views.to_insta, name='to_insta'),
+    path('upload-to-insta/<int:id>', views.upload_to_insta, name='upload_to_insta')
 ]

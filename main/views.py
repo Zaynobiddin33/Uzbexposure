@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from . import models
 from django.core.paginator import Paginator
 # Create your views here.
@@ -18,7 +18,9 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 import boto3
 from django.db.models import Count
-
+from instagrapi import Client
+from io import BytesIO
+from PIL import Image
 ### PUT THE AWS CODE ASAP
 
 ###
@@ -270,3 +272,34 @@ def ranking(request):
             'email': hide_email(user.email)
         })
     return render(request, 'ranking.html', {'ranked_users_with_rank': ranked_users_with_rank})
+
+def to_insta(request):
+    images = models.Images.objects.filter(is_published_insta = False).order_by('-id')
+    return render(request, 'to_insta.html', {'images': images})
+
+def upload_to_insta(request, id):
+    # Fetch image data from the database
+    data = get_object_or_404(models.Images, id=id)
+
+    # Instagram credentials
+    username = 'here is your username'
+    password = 'here is your password'
+
+    # Authenticate to Instagram
+    cl = Client()
+    cl.login(username, password)
+
+    # Download the image to memory
+    response = requests.get(data.url)
+
+    with open('image.jpg', 'wb')as file:
+        file.write(response.content)
+    print('image saved')
+
+    # Upload the image to Instagram from memory
+    caption = data.description if data.description else ''
+    cl.photo_upload('image.jpg', caption=caption)
+    print('image uploaded')
+    data.is_published_insta = True
+    data.save()
+    return redirect('to_insta')

@@ -11,6 +11,7 @@ class Images(models.Model):
     randomized = models.IntegerField(null=True)
     is_active = models.BooleanField(default=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    is_published_insta= models.BooleanField(default=False)
 
     def __str__(self) -> str:
         if  self.description != None:
