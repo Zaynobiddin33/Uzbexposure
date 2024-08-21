@@ -4,7 +4,7 @@ from . import views
 urlpatterns = [
     path("", views.main, name = 'main'),
     path('fetch', views.fetch, name='fetch'),
-    path('delete/<int:id>', views.delete_image, name='delete_image'),
+    path('delete/<int:id>', views.delete_image_fetch, name='delete_image_fetch'),
     path('pixabay', views.get_pixabay, name='pixabay'),
     path('contribute', views.contribute, name='contribute'),
     path('sign-up', views.signup, name='signup'),

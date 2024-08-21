@@ -42,7 +42,7 @@ def send_email(token, reciever):
 
 def fetch(request):
         images = models.Images.objects.all().order_by('-id')
-        if request.user.username == '1':
+        if request.user.is_superuser:
             access_key = 'jBrWtxyJmq8DvExdDtqNEEV0-iLHXPTOKMc7Of1XXw0'
             if request.method == 'POST':
                 name = request.POST['name']
@@ -90,7 +90,7 @@ def main(request):
     all_images = models.Images.objects.filter(is_active = True).order_by('randomized')
     main_four = all_images[:4]
     page_number = int(request.GET.get('page', 1))
-    paginator = Paginator(all_images, 8)
+    paginator = Paginator(all_images, 10)
     images = paginator.get_page(page_number)
 
     context = {
@@ -100,7 +100,7 @@ def main(request):
     print(request.user)
     return render(request, 'index.html', context)
 
-def delete_image(request, id):
+def delete_image_fetch(request, id):
      image = models.Images.objects.get(id = id)
      image.delete()
      return redirect('fetch')
@@ -278,28 +278,30 @@ def to_insta(request):
     return render(request, 'to_insta.html', {'images': images})
 
 def upload_to_insta(request, id):
-    # Fetch image data from the database
-    data = get_object_or_404(models.Images, id=id)
+    if request.user.is_superuser:
+        # Fetch image data from the database
+        data = get_object_or_404(models.Images, id=id)
 
-    # Instagram credentials
-    username = 'here is your username'
-    password = 'here is your password'
+        # Instagram credentials
+        username = 'here is your username'
+        password = 'here is your password'
 
-    # Authenticate to Instagram
-    cl = Client()
-    cl.login(username, password)
+        # Authenticate to Instagram
+        cl = Client()
+        cl.login(username, password)
 
-    # Download the image to memory
-    response = requests.get(data.url)
+        # Download the image to memory
+        response = requests.get(data.url)
 
-    with open('image.jpg', 'wb')as file:
-        file.write(response.content)
-    print('image saved')
+        with open('image.jpg', 'wb')as file:
+            file.write(response.content)
+        print('image saved')
 
-    # Upload the image to Instagram from memory
-    caption = data.description if data.description else ''
-    cl.photo_upload('image.jpg', caption=caption)
-    print('image uploaded')
-    data.is_published_insta = True
-    data.save()
-    return redirect('to_insta')
+        # Upload the image to Instagram from memory
+        caption = data.description if data.description else ''
+        cl.photo_upload('image.jpg', caption=caption)
+        print('image uploaded')
+        data.is_published_insta = True
+        data.save()
+        return redirect('to_insta')
+    return redirect('main')
