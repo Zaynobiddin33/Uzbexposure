@@ -21,7 +21,7 @@
 
         <div class="row bg-dark">
             {% for i in four %}
-            <div class="main-image col-3" style="height: 100vh; background-image: url({{i.url}}); background-size: cover; background-position: center;"></div>
+            <div class="main-image col-3" style="height: 100vh; background-size: cover; background-position: center;" data-bg-url="{{ i.url }}"></div>
             {% endfor %}
         </div>
 
@@ -132,5 +132,21 @@
 
         setInterval(changeWord, 2000); // Change every 2 seconds
     });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const images = document.querySelectorAll('.main-image');
+
+    images.forEach((image) => {
+        const imgUrl = image.getAttribute('data-bg-url');
+        const img = new Image();
+        img.src = imgUrl;
+
+        img.onload = function() {
+            image.style.backgroundImage = `url('${imgUrl}')`;
+            image.classList.add('loaded'); // Add class to remove blur when loaded
+        };
+    });
+});
     </script>
 {% endblock %}

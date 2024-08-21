@@ -16,21 +16,28 @@ body {
   /* Main Image Styling */
   .main-image {
     background-color: black;
-    filter: brightness(0);
+    filter: brightness(0) blur(20px); /* Initial blur and darkness */
+    transition: filter 1s ease; /* Smooth transition for filter effects */
+    background-size: cover;
+    background-position: center;
     animation: appearImage 8s forwards;
-  }
-  @keyframes appearImage {
+}
+
+@keyframes appearImage {
     0% {
-        filter: brightness(0);
+        filter: brightness(0) blur(20px);
     }
-    25%{
-        filter: brightness(0);
+    25% {
+        filter: brightness(0) blur(20px);
     }
     100% {
-        position: relative;
-        filter: brightness(0.2);
+        filter: brightness(0.2) blur(0); /* Gradually reduce blur and increase brightness */
     }
-  }
+}
+
+.main-image.loaded {
+    filter: brightness(0.2) blur(0); /* Final state: Slightly bright with no blur */
+}
   .no-scroll {
     animation: keepMain 10s forwards;
   }
