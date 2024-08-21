@@ -21,7 +21,10 @@
 
         <div class="row bg-dark">
             {% for i in four %}
-            <div class="main-image col-3" style="height: 100vh; background-size: cover; background-position: center;" data-bg-url="{{ i.url }}"></div>
+            <div class="main-image col-3" 
+                data-src="{{i.url}}" 
+                style="height: 100vh; background-image: url('{{i.low}}'); background-size: cover; background-position: center;">
+            </div>
             {% endfor %}
         </div>
 
@@ -134,17 +137,20 @@
     });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function() {
     const images = document.querySelectorAll('.main-image');
-
-    images.forEach((image) => {
-        const imgUrl = image.getAttribute('data-bg-url');
-        const img = new Image();
-        img.src = imgUrl;
-
-        img.onload = function() {
-            image.style.backgroundImage = `url('${imgUrl}')`;
-            image.classList.add('loaded'); // Add class to remove blur when loaded
+    
+    images.forEach(image => {
+        const highResSrc = image.getAttribute('data-src');
+        const highResImg = new Image();
+        
+        // Preload high-resolution image
+        highResImg.src = highResSrc;
+        
+        highResImg.onload = () => {
+            // Replace the low-res image with the high-res one
+            image.style.backgroundImage = `url(${highResSrc})`;
+            image.classList.add('loaded'); // Remove blur once high-res image is loaded
         };
     });
 });

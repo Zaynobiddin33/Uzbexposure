@@ -39,6 +39,16 @@ def send_email(token, reciever):
     recipient_list = [f'{reciever}']
     send_mail(subject, message, from_email, recipient_list)
 
+def get_low_res(image_url, name):
+        response = requests.get(image_url)
+        image = Image.open(BytesIO(response.content))
+
+        # Reduce image quality (set quality to 10% of the original)
+        img_byte_arr = BytesIO()
+        image.save(img_byte_arr, format='JPEG', quality=10)
+        img_byte_arr.seek(0)
+        low_url = upload_to_server(image=img_byte_arr, name=f'low-res/{name}.jpg')
+        return low_url
 
 def fetch(request):
         images = models.Images.objects.all().order_by('-id')
@@ -55,10 +65,13 @@ def fetch(request):
                     
                     if not models.Images.objects.filter(url =  i['urls']['regular']).first():
                         print(i['urls']['regular'])
-                        models.Images.objects.create(
+                        image = models.Images.objects.create(
                             url = i['urls']['regular'],
                             description = i['description']
                         )
+                        url_low = get_low_res(i['urls']['regular'], token_gen())
+                        image.low = url_low
+                        image.save()
                 return redirect('fetch')
         else:
             return redirect('main')
@@ -81,9 +94,12 @@ def get_pixabay(request):
         # Make the API request
         response = requests.get(url, params=params)
         for i in response.json()['hits']:
-            models.Images.objects.create(
+            image = models.Images.objects.create(
                  url = i['largeImageURL']
             )
+            url_low = get_low_res(i['largeImageURL'], token_gen())
+            image.low = url_low
+            image.save()
         return redirect('fetch')
 
 def main(request):
@@ -215,12 +231,16 @@ def upload(request):
         url = upload_to_server(image = image, name = filename)
         
 
-        models.Images.objects.create(
+        image_db = models.Images.objects.create(
             url = url,
             description = description,
             is_active = False,
             author = request.user
         )
+        url_low = get_low_res(image_db.url, token_gen())
+        image_db.low = url_low
+        image_db.save()
+
     return render(request, 'upload.html')
 
 @login_required(login_url='login')
@@ -304,4 +324,13 @@ def upload_to_insta(request, id):
         data.is_published_insta = True
         data.save()
         return redirect('to_insta')
+    return redirect('main')
+
+def all_low(request):
+    images = models.Images.objects.all()
+    for i in images:
+        if not i.low:
+            url_low = get_low_res(i.url, token_gen())
+            i.low = url_low
+            i.save()
     return redirect('main')

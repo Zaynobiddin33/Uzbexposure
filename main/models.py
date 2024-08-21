@@ -12,6 +12,7 @@ class Images(models.Model):
     is_active = models.BooleanField(default=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     is_published_insta= models.BooleanField(default=False)
+    low = models.URLField(max_length=500, null = True)
 
     def __str__(self) -> str:
         if  self.description != None:

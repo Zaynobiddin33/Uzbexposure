@@ -16,19 +16,25 @@ body {
   /* Main Image Styling */
   .main-image {
     background-color: black;
-    filter: brightness(0) blur(20px); /* Initial blur and darkness */
-    transition: filter 1s ease; /* Smooth transition for filter effects */
     background-size: cover;
     background-position: center;
+    filter: blur(10px); /* Start with a slight blur for the low-res image */
+    transition: filter 1s ease, background-image 1s ease; /* Smooth transition for blur and background image */
+    height: 100vh;
     animation: appearImage 8s forwards;
 }
 
+.main-image.loaded {
+    filter: blur(0px); /* Remove the blur when the high-res image is loaded */
+}
+
+
 @keyframes appearImage {
     0% {
-        filter: brightness(0) blur(20px);
+        filter: brightness(0) blur(0px);
     }
     25% {
-        filter: brightness(0) blur(20px);
+        filter: brightness(0) blur(0px);
     }
     100% {
         filter: brightness(0.2) blur(0); /* Gradually reduce blur and increase brightness */

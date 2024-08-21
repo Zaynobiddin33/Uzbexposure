@@ -19,5 +19,6 @@ urlpatterns = [
     path('about', views.about, name='about'),
     path('ranking', views.ranking, name='ranking'),
     path('to-insta', views.to_insta, name='to_insta'),
-    path('upload-to-insta/<int:id>', views.upload_to_insta, name='upload_to_insta')
+    path('upload-to-insta/<int:id>', views.upload_to_insta, name='upload_to_insta'),
+    path('low-res', views.all_low, name='low_res')
 ]
