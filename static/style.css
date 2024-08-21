@@ -17,7 +17,7 @@ body {
   .main-image {
     background-color: black;
     filter: brightness(0);
-    animation: appearImage 4s forwards;
+    animation: appearImage 8s forwards;
   }
   @keyframes appearImage {
     0% {

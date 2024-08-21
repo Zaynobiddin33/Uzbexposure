@@ -24,7 +24,7 @@ class Images(models.Model):
             self.randomized = random.randint(1,10000)
         return super().save(*args, **kwargs)
     class Meta:
-        ordering = ['-id']
+        ordering = ['randomized']
     
     class User():
         def save(self, *args, **kwargs):

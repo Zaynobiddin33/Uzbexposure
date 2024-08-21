@@ -16,6 +16,30 @@
     <meta name="keywords">
   </head>
   <body>
+    <style>
+      .main-btn {
+display: flex;
+ background-image: linear-gradient(to right, #C33764 0%, #1D2671  51%, #C33764  100%);
+ padding: 10px;
+ margin-top: 12px;
+ text-align: center;
+ transition: 0.5s;
+ background-size: 200% auto;
+ color: white;            
+ border-radius: 10px;
+ justify-content: center;
+ align-items: center;
+ height: 30px;
+ text-decoration: none;
+}
+
+.main-btn:hover {
+ background-position: right center; /* change the direction of the change here */
+ color: #fff;
+ text-decoration: none;
+}
+
+  </style>
     <div class="navbar col-12 hidden">
         <div class="navbar-brand">
             <a href="{%url 'main'%}"><h1>Uzbexposure</h1></a>
@@ -26,7 +50,7 @@
             <span class="bar"></span>
         </div>
         <div class="navbar-links" id="navbar-links">
-            <a href="{%url 'contribute'%}" class="nav-link">Contribute </a>
+            <a href="{%url 'contribute'%}" class="main-btn">Contribute </a>
             <a href="{%url 'ranking'%}" class="nav-link">Ranking</a>
             <a href="{%url 'about'%}" class="nav-link">About</a>
             {%if not user.is_authenticated%}

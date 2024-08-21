@@ -87,7 +87,7 @@ def get_pixabay(request):
         return redirect('fetch')
 
 def main(request):
-    all_images = models.Images.objects.filter(is_active = True).order_by('randomized')
+    all_images = models.Images.objects.filter(is_active = True).order_by('?')
     main_four = all_images[:4]
     page_number = int(request.GET.get('page', 1))
     paginator = Paginator(all_images, 10)
@@ -261,7 +261,7 @@ def about(request):
     return render(request, 'about.html')
 
 def ranking(request):
-    ranked_users = User.objects.annotate(image_count=Count('images')).order_by('-image_count')
+    ranked_users = User.objects.exclude(is_superuser=True).annotate(image_count=Count('images')).order_by('-image_count')
 
     ranked_users_with_rank = []
     for index, user in enumerate(ranked_users, start=1):
