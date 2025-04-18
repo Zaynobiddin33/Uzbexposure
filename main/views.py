@@ -21,9 +21,19 @@ from django.db.models import Count
 from instagrapi import Client
 from io import BytesIO
 from PIL import Image
-### PUT THE AWS CODE ASAP
+from tokens import *
 
-###
+
+def verify_recaptcha(token):
+    secret_key = "YOUR_SECRET_KEY_HERE"
+    response = requests.post(
+        'https://www.google.com/recaptcha/api/siteverify',
+        data={
+            'secret': secret_key,
+            'response': token
+        }
+    )
+    return response.json().get('success', False)
 
 def hide_email(email):
     let_len = len(email)-12
@@ -34,7 +44,7 @@ def token_gen():
 
 def send_email(token, reciever):
     subject = 'Activate Uzbexposure account'
-    message = f'Go to the website to activate your account: http://127.0.0.1:8000/activate/{token}'
+    message = f'Go to the website to activate your account: https://Uzbexposure.com/activate/{token}'
     from_email = 'zaynobiddinshaxobiddinov9999@gmail.com'
     recipient_list = [f'{reciever}']
     send_mail(subject, message, from_email, recipient_list)
@@ -133,7 +143,10 @@ def signup(request):
           email = request.POST['email']
           password = request.POST['password']
           password2 = request.POST['password2']
-          if not User.objects.filter(email = email).first():
+          token = request.POST.get('g-recaptcha-response')
+          if not verify_recaptcha(token):
+            message = 'captcha failed'
+          elif not User.objects.filter(email = email).first():
             if password2 == password:
                 user = User.objects.create_user(
                     first_name= name,

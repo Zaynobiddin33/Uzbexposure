@@ -6,11 +6,13 @@ certifi==2024.7.4
 charset-normalizer==3.3.2
 Django==5.1
 django-allauth==64.0.0
+django-recaptcha==4.1.0
 django-storages==1.14.4
 idna==3.7
 instagrapi==2.1.2
 jmespath==1.0.1
 pillow==10.4.0
+psycopg2-binary==2.9.10
 pycryptodomex==3.20.0
 pydantic==2.7.1
 pydantic_core==2.18.2

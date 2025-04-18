@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import tokens
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'main',
     'allauth.socialaccount',
     'storages',
+    'django_recaptcha',
 
 ]
 
@@ -83,23 +85,23 @@ WSGI_APPLICATION = 'Project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'uzbexposure',
-        'USER': 'root',
-        'PASSWORD': '1',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'uzbexposure',
+#         'USER': 'root',
+#         'PASSWORD': '1',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
 
 
 # Password validation
@@ -137,8 +139,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'static'  # Use a different directory for STATIC_ROOT
+
+#comment it on server
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+#comment it on local
+# STATIC_ROOT = BASE_DIR / 'static'  # Use a different directory for STATIC_ROOT
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 # Default primary key field type
@@ -153,7 +160,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'zaynobiddinshaxobiddinov9999@gmail.com'
-EMAIL_HOST_PASSWORD = 'jdsh yump pzqq rvod'
+EMAIL_HOST_PASSWORD = tokens.EMAIL_HOST_PASSWORD
 
 # Django Allauth configuration
 
@@ -169,3 +176,6 @@ LOGIN_REDIRECT_URL = '/'
 
 # AUTH_USER_MODEL = 'main.CustomUser'
     
+#RECAPTCHA
+RECAPTCHA_PUBLIC_KEY = tokens.CAPTCHA_KEY
+RECAPTCHA_PRIVATE_KEY = tokens.CAPTCHA_SECRET
