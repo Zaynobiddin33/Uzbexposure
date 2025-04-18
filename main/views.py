@@ -25,7 +25,7 @@ from tokens import *
 
 
 def verify_recaptcha(token):
-    secret_key = "YOUR_SECRET_KEY_HERE"
+    secret_key = CAPTCHA_SECRET
     response = requests.post(
         'https://www.google.com/recaptcha/api/siteverify',
         data={
