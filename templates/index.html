@@ -3,6 +3,15 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'style.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
+<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+<style>
+    .lazy-image.loaded {
+    filter: blur(0);
+}
+</style>
 {% endblock %}
 
 {% block content %}
@@ -19,12 +28,13 @@
             </div>
         </div>
 
-        <div class="row bg-dark" style="height: 100vh;">
+        <div class="row bg-dark m-0 p-0" style="height: 100vh;">
             {% for i in four %}
             <div class="main-image col-3" 
                 data-src="{{i.url}}" 
                 style="height: 100vh; background-image: url('{{i.low}}'); background-size: cover; background-position: center;">
             </div>
+            <!-- <p>{{i.low}}</p> -->
             {% endfor %}
         </div>
 
@@ -43,7 +53,7 @@
                 {% for i in images %}
                 <div class="col-12 col-xs-12 col-sm-6 col-lg-4 col-xl-4 mb-4 grid-item post">
                     <div class="card" style="background-color: transparent; position: relative; min-height: 200px; overflow: hidden;">
-                        <img src="{{ i.url }}" alt="News Image">
+                        <img class="lazy-image" src="{{ i.url }}" alt="News Image">
                         {% if i.description %}
                         <p style="background-color: transparent; color: white;">{{ i.description }}</p>
                         {% endif %}
@@ -74,37 +84,36 @@
         {% endif %}
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
-    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var elem = document.querySelector('.grid');
+    var msnry = new Masonry(elem, {
+        itemSelector: '.grid-item',
+        columnWidth: '.grid-item',
+        percentPosition: true
+    });
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var elem = document.querySelector('.grid');
-        var msnry = new Masonry(elem, {
-            itemSelector: '.grid-item',
-            columnWidth: '.grid-item',
-            percentPosition: true
-        });
+    var infScroll = new InfiniteScroll('.grid', {
+        path: '.next',
+        append: '.grid-item',
+        outlayer: msnry,
+        history: false,
+        status: ".load"
+    });
 
-        var infScroll = new InfiniteScroll('.grid', {
-            path: '.next',
-            append: '.grid-item',
-            outlayer: msnry,
-            history: false,
-            status: ".load"
-        });
-
-        infScroll.on('append', function() {
-            msnry.layout();
-        });
-
-        infScroll.on('load', function() {
-            msnry.layout();
+    // Only update Masonry once images are loaded
+    infScroll.on('append', function (body, newElements) {
+        imagesLoaded(newElements, function () {
+            msnry.layout(); // only called once all images are ready
         });
     });
-    </script>
+
+    infScroll.on('load', function () {
+        // Optional: sometimes helps if layout is buggy after loading
+        msnry.layout();
+    });
+});
+</script>
 
     <script>
     document.addEventListener("DOMContentLoaded", function() {
